@@ -2,15 +2,13 @@ const express = require("express");
 const router = express.Router();
 const cors = require("cors");
 const nodemailer = require("nodemailer");
-const port = process.env.PORT || 3001
-const DbDeploy = process.env.DB_DEPLOY
 
 // server used to send send emails
 const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/", router);
-app.listen(port, () => console.log(`Server Running in Port ${port}`));
+app.listen(5000, () => console.log(`Server Running in Port 5000`));
 console.log(process.env.EMAIL_USER);
 console.log(process.env.EMAIL_PASS);
 
@@ -18,7 +16,7 @@ const contactEmail = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: "berrfarias@gmail.com",
-    pass: ""
+    pass: "fziiyfetndkeomzg"
   },
 });
 
@@ -36,7 +34,7 @@ router.post("/contact", (req, res) => {
   const message = req.body.message;
  
   const mail = {
-    from: name,
+    from: email,
     to: "berrfarias@gmail.com",
     subject: "Contact Form Submission - Portfolio",
     html: `<p>Name: ${name}</p>
