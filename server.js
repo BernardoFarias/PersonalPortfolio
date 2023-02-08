@@ -12,11 +12,12 @@ app.listen(5000, () => console.log(`Server Running in Port 5000`));
 console.log(process.env.EMAIL_USER);
 console.log(process.env.EMAIL_PASS);
 
+
 const contactEmail = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: "berrfarias@gmail.com",
-    pass: "fziiyfetndkeomzg"
+    user: `berrfarias@gmail.com`,
+    pass: `fziiyfetndkeomzg`
   },
 });
 
