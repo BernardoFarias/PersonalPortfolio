@@ -1,45 +1,53 @@
-import { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import contactImg from "../assets/img/contact.png";
 import 'animate.css';
 import TrackVisibility from 'react-on-screen';
+import emailjs from '@emailjs/browser';
 
 export const Contact = () => {
-  const formInitialDetails = {
-    firstName: '',
-    email: '',
-    message: ''
-  }
-  const [formDetails, setFormDetails] = useState(formInitialDetails);
-  const [buttonText, setButtonText] = useState('Send');
-  const [status, setStatus] = useState({});
 
-  const onFormUpdate = (category, value) => {
-      setFormDetails({
-        ...formDetails,
-        [category]: value
-      })
-  }
+  const formRef = useRef();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setButtonText("Sending...");
-    let response = await fetch("http://localhost:5000/contact", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
-      body: JSON.stringify(formDetails),
-    });
-    setButtonText("Send");
-    let result = await response.json();
-    setFormDetails(formInitialDetails);
-    if (result.code == 200) {
-      setStatus({ succes: true, message: 'Message sent successfully'});
-    } else {
-      setStatus({ succes: false, message: 'Something went wrong, please try again later.'});
+    const formInitialDetails = {
+        user_name: '',
+        user_email: '',
+        message: ''
     }
-  };
+    const [formDetails, setFormDetails] = useState(formInitialDetails);
+    const [buttonTextEng, setButtonTextEng] = useState("Send");
+    const [status, setStatus] = useState({});
+    const { REACT_APP_SERVICE_ID, REACT_APP_TEMPLATE_ID, REACT_APP_PUBLIC_KEY } = process.env
+
+    const onFormUpdate = (category, value) => {
+        setFormDetails({
+            ...formDetails,
+            [category]: value
+        })
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log("soy formref", formRef)
+        if (formDetails.message !== "" && formDetails.user_email !== "") {
+        setButtonTextEng('Sending...');
+        emailjs.sendForm(
+          REACT_APP_SERVICE_ID, 
+          REACT_APP_TEMPLATE_ID, 
+          formRef.current , 
+          REACT_APP_PUBLIC_KEY
+          )
+          .then((result) => {
+            console.log(result.text);
+            setFormDetails(formInitialDetails);
+            setButtonTextEng("Sent");
+          })
+          .catch((error) => {
+            console.log(error.text);
+          });
+        }
+      };
+
 
   return (
     <section className="contact" id="connect">
@@ -57,17 +65,35 @@ export const Contact = () => {
               {({ isVisible }) =>
                 <div className={isVisible ? "animate__animated animate__fadeIn" : ""}>
                 <h2>Get in touch!</h2>
-                <form onSubmit={handleSubmit}>
+                <form ref={formRef} onSubmit={handleSubmit}>
                   <Row>
                     <Col size={12} sm={6} className="px-1">
-                      <input type="text" value={formDetails.firstName} placeholder="Name" onChange={(e) => onFormUpdate('firstName', e.target.value)} />
+                      <input 
+                        type="text" 
+                        value={formDetails.user_name}
+                        name="user_name"
+                        placeholder="Name" 
+                        onChange={(e) => onFormUpdate('user_name', e.target.value)} 
+                        />
                     </Col>
                     <Col size={12} sm={6} className="px-1">
-                      <input type="email" value={formDetails.email} placeholder="Email Address" onChange={(e) => onFormUpdate('email', e.target.value)} />
+                      <input 
+                      type="email"
+                      name="user_email"
+                      value={formDetails.user_email} 
+                      placeholder="Email Address" 
+                      onChange={(e) => onFormUpdate('user_email', e.target.value)} 
+                      />
                     </Col>
                     <Col size={12} className="px-1">
-                      <textarea rows="6" value={formDetails.message} placeholder="Message" onChange={(e) => onFormUpdate('message', e.target.value)}></textarea>
-                      <button type="submit"><span>{buttonText}</span></button>
+                      <textarea 
+                      rows="6" 
+                      value={formDetails.message}
+                      name="message"
+                      placeholder="Message" 
+                      onChange={(e) => onFormUpdate('message', e.target.value)}>
+                      </textarea>
+                      <button type="submit"><span>{buttonTextEng}</span></button>
                     </Col>
                     {
                       status.message &&
