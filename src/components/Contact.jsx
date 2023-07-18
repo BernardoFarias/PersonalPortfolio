@@ -4,9 +4,12 @@ import contactImg from "../assets/img/contact.png";
 import 'animate.css';
 import TrackVisibility from 'react-on-screen';
 import emailjs from '@emailjs/browser';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const Contact = () => {
 
+  const notify = () => toast("Message sent!");
   const formRef = useRef();
 
     const formInitialDetails = {
@@ -41,6 +44,7 @@ export const Contact = () => {
             console.log(result.text);
             setFormDetails(formInitialDetails);
             setButtonTextEng("Sent");
+            notify()
           })
           .catch((error) => {
             console.log(error.text);
@@ -105,6 +109,7 @@ export const Contact = () => {
                 </form>
               </div>}
             </TrackVisibility>
+            <ToastContainer />
           </Col>
         </Row>
       </Container>
