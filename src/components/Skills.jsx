@@ -40,8 +40,20 @@ export const Skills = () => {
                                 <h5>ReactJS</h5>
                             </div>
                             <div className="item">
+                                <img src={"https://seeklogo.com/images/N/next-js-icon-logo-EE302D5DBD-seeklogo.com.png"} alt="Figma"></img>
+                                <h5>NextJS</h5>
+                            </div>
+                            <div className="item">
+                                <img src={"https://seeklogo.com/images/A/astro-logo-B3B4DABB0A-seeklogo.com.png"} alt="Figma"></img>
+                                <h5>Astro</h5>
+                            </div>
+                            <div className="item">
                                 <img src={"https://www.vectorlogo.zone/logos/nodejs/nodejs-icon.svg"} alt="NodeJS"></img>
                                 <h5>NodeJS</h5>
+                            </div>
+                            <div className="item">
+                                <img src={"https://seeklogo.com/images/R/remix-logo-862D8B1019-seeklogo.com.png"} alt="NodeJS"></img>
+                                <h5>RemixRun</h5>
                             </div>
                             <div className="item">
                                 <img src={"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/1200px-Typescript_logo_2020.svg.png"} alt="NodeJS"></img>
@@ -68,9 +80,10 @@ export const Skills = () => {
                                 <h5>Tailwind</h5>
                             </div>
                             <div className="item">
-                                <img src={"https://www.vectorlogo.zone/logos/figma/figma-icon.svg"} alt="Figma"></img>
-                                <h5>Figma</h5>
+                                <img src={"https://www.svgrepo.com/show/306383/material-ui.svg"} alt="Tailwind"></img>
+                                <h5>MateriaulUI</h5>
                             </div>
+
                             <div className="item">
                                 <img src={"https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg"} alt="HTML"></img>
                                 <h5>HTML 5</h5>
